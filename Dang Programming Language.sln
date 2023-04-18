@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dang", "Dang\Dang.vcxproj", "{59ECBB4A-F083-4306-9D97-12EBDFFE203C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser", "Parser\Parser.vcxproj", "{840DAA87-D3E4-43C2-87A2-13947BF9E444}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Debug|Win32.Build.0 = Debug|Win32
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Debug|x64.ActiveCfg = Debug|x64
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Debug|x64.Build.0 = Debug|x64
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Release|Win32.ActiveCfg = Release|Win32
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Release|Win32.Build.0 = Release|Win32
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Release|x64.ActiveCfg = Release|x64
+		{59ECBB4A-F083-4306-9D97-12EBDFFE203C}.Release|x64.Build.0 = Release|x64
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Debug|Win32.ActiveCfg = Debug|Win32
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Debug|Win32.Build.0 = Debug|Win32
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Debug|x64.ActiveCfg = Debug|x64
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Debug|x64.Build.0 = Debug|x64
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Release|Win32.ActiveCfg = Release|Win32
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Release|Win32.Build.0 = Release|Win32
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Release|x64.ActiveCfg = Release|x64
+		{840DAA87-D3E4-43C2-87A2-13947BF9E444}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+EndGlobal

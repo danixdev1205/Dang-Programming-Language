@@ -1,0 +1,61 @@
+# CMake configurations.
+cmake-build-debug
+cmake-build-release
+
+# JetBrains Rider.
+.idea
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# Prerequisites.
+*.d
+*.json
+*.tlog
+*.iobj
+*.ipdb
+*.idb
+*.recipe
+*.DotSettings
+
+# Compiled object files.
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled headers.
+*.gch
+*.pch
+
+# Compiled dynamic libraries.
+*.so
+*.dylib
+*.dll
+
+# Compiled static libraries.
+*.lai
+*.la
+*.a
+*.lib
+
+# Fortran module files.
+*.mod
+*.smod
+
+# Compiled files.
+/x64/
+ANSI/x64/
+ANSI/Release/
+ANSI/Debug/
+Dang/x64/
+Dang/Release/
+Dang/Debug/
+bin/
+obj/
+*.exe
+*.out
+*.app
+*.ifc
+*.pdb
+*.ilk
