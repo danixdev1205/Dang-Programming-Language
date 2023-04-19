@@ -19,23 +19,32 @@ export namespace dang::enums
         /** @code + @endcode */
         operator_plus,
 
+        /** @code += @endcode */
+        operator_plus_equals,
+
         /** @code - @endcode */
         operator_minus,
+
+        /** @code -= @endcode */
+        operator_minus_equals,
 
         /** @code * @endcode */
         operator_asterisk,
 
-        /** @code ** @endcode */
-        operator_asterisk_asterisk,
+        /** @code *= @endcode */
+        operator_asterisk_equals,
 
         /** @code / @endcode */
         operator_slash,
 
-        /** @code // @endcode */
-        operator_slash_slash,
+        /** @code /= @endcode */
+        operator_slash_equals,
 
         /** @code % @endcode */
         operator_modulus,
+
+        /** @code %= @endcode */
+        operator_modulus_equals,
 
         /** @code = @endcode */
         operator_equals,
@@ -60,9 +69,6 @@ export namespace dang::enums
 
         /** @code ? @endcode */
         operator_question,
-
-        /** @code ?? @endcode */
-        operator_question_question,
 
         /** @code : @endcode */
         operator_colon,
@@ -175,6 +181,12 @@ export namespace dang::enums
          */
         keyword_var,
 
+        /**
+         * Constant declaration.
+         * @code const @endcode
+         */
+        keyword_const,
+
 #pragma endregion
 
         /** User-defined identifier. */
@@ -259,6 +271,8 @@ export namespace dang::enums
             return L"imp";
         case token_type::keyword_var:
             return L"var";
+        case token_type::keyword_const:
+            return L"const";
 
         case token_type::identifier:
             return L"identifier";

@@ -38,18 +38,34 @@ export namespace dang
 #pragma region Operators
 
                 case L'+':
+                    switch (next())
+                    {
+                case L'=':
+                    add(operator_plus_equals, line_, column_ - 1);
+                        break;
+                default:
                     add(operator_plus, line_, column_);
+                        continue;
+                    }
                     break;
 
                 case L'-':
+                    switch (next())
+                    {
+                case L'=':
+                    add(operator_minus_equals, line_, column_ - 1);
+                        break;
+                default:
                     add(operator_minus, line_, column_);
+                        continue;
+                    }
                     break;
 
                 case L'*':
                     switch (next())
                     {
-                    case L'*':
-                        add(operator_asterisk_asterisk, line_, column_ - 1);
+                    case L'=':
+                        add(operator_asterisk_equals, line_, column_ - 1);
                         break;
                     default:
                         add(operator_asterisk, line_, column_);
@@ -65,19 +81,27 @@ export namespace dang
                     else
                         switch (next())
                         {
-                        case L'/':
-                            add(operator_slash_slash, line_, column_ - 1);
+                        case L'=':
+                            add(operator_slash_equals, line_, column_ - 1);
                             break;
                         default:
                             add(operator_slash, line_, column_);
                             continue;
                         }
                     break;
-
+                    
                 case L'%':
+                    switch (next())
+                    {
+                case L'=':
+                    add(operator_modulus_equals, line_, column_ - 1);
+                        break;
+                default:
                     add(operator_modulus, line_, column_);
+                        continue;
+                    }
                     break;
-
+                    
                 case L'=':
                     switch (next())
                     {
@@ -124,15 +148,7 @@ export namespace dang
                     break;
 
                 case L'?':
-                    switch (next())
-                    {
-                    case L'?':
-                        add(operator_question_question, line_, column_ - 1);
-                        break;
-                    default:
-                        add(operator_question, line_, column_);
-                        continue;
-                    }
+                    add(operator_question, line_, column_);
                     break;
 
                 case L':':
@@ -266,6 +282,8 @@ export namespace dang
                 add(keyword_imp, line, column);
             else if (res == L"var")
                 add(keyword_var, line, column);
+            else if (res == L"const")
+                add(keyword_const, line, column);
             else
                 add(identifier, res, line, column);
         }

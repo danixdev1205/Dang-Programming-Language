@@ -9,3 +9,4 @@ export import "expressions/expression.hxx";
 export import :value_expression;
 export import :unary_expression;
 export import :binary_expression;
+export import :variable_expression;

@@ -54,16 +54,69 @@ export namespace dang
 
 #pragma region Recursive Descent
 
-        /** Generates expression. */
+        /** Generates statement. */
         [[nodiscard]]
         const ast::statement* statement()
         {
             if (match(keyword_print))
                 return new ast::print_statement(expression());
+            if (match(keyword_var))
+            {
+                const auto name = consume(identifier);
+                const token* type = nullptr;
+
+                if (match(operator_colon))
+                    type = consume(identifier);
+                
+                skip(operator_equals);
+                
+                return new ast::variable_statement(expression(), name->value(), type == nullptr ? L"auto" : type->value());
+            }
+            if (match(keyword_const))
+            {
+                const auto name = consume(identifier);
+                const token* type = nullptr;
+
+                if (match(operator_colon))
+                    type = consume(identifier);
+                
+                skip(operator_equals);
+                
+                return new ast::constant_statement(expression(), name->value(), type == nullptr ? L"auto" : type->value());
+            }
+
+            return assignment_statement();
+        }
+
+        /** Generates assignment statement. */
+        [[nodiscard]]
+        const ast::statement* assignment_statement()
+        {
+            using enum enums::assignment_operator;
+            
+            const auto cur = get();
+            
+            if (match(identifier))
+            {
+                if (match(operator_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), equals);
+                if (match(operator_plus_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), plus_equals);
+                if (match(operator_minus_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), minus_equals);
+                if (match(operator_asterisk_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), asterisk_equals);
+                if (match(operator_slash_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), slash_equals);
+                if (match(operator_modulus_equals))
+                    return new ast::assignment_statement(expression(), cur->value(), modulus_equals);
+                
+                throw;
+            }
 
             throw;
         }
-
+        
         /** Generates expression. */
         [[nodiscard]]
         const ast::expression* expression() { return binary_and(); }
@@ -239,7 +292,7 @@ export namespace dang
 
         /**
          * Generates binary multiplicative expression.
-         * @details @n Handles binary multiplicative '*' and '/'.
+         * @details @n Handles binary multiplicative '*', '/' and '%'.
          */
         [[nodiscard]]
         const ast::expression* binary_multiplicative()
@@ -258,6 +311,11 @@ export namespace dang
                 if (match(operator_slash))
                 {
                     expr = new ast::binary_expression(expr, unary(), slash);
+                    continue;
+                }
+                if (match(operator_modulus))
+                {
+                    expr = new ast::binary_expression(expr, unary(), modulus);
                     continue;
                 }
 
@@ -305,6 +363,9 @@ export namespace dang
             if (match(literal_string))
                 return new ast::value_expression(new ast::string_value(cur->read<string>()));
 
+            if (match(identifier))
+                return new ast::variable_expression(cur->value());
+            
             throw;
         }
 
@@ -341,11 +402,11 @@ export namespace dang
         /**
          * Compares interpreted element at index with the given type.
          * @param type Interpreted element type to match.
-         * @param index Index of the interpreted element.
+         * @param offset Index of the interpreted element.
          * @return Whether the types match.
          */
         [[nodiscard]]
-        bool look(const enums::token_type type, const size_t index) const { return *get(index) == type; }
+        bool look(const enums::token_type type, const size_t offset = 1) const { return *get(offset) == type; }
 
         /**
          * Consumes current interpreted element if the type matches.

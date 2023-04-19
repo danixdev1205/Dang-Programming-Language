@@ -37,6 +37,6 @@ namespace dang::ast
 
         /** Outputs print statement to a wide character output stream. */
         [[nodiscard]]
-        std::wostream& out(std::wostream& os) const override { return os << "std::wcout << " << *expression_ << ";"; }
+        std::wostream& out(std::wostream& os) const override { return os << "std::wcout<<" << *expression_ << ";"; }
     };
 }

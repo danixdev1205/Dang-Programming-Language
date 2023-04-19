@@ -53,9 +53,6 @@ namespace dang::ast
         
         /** Outputs binary expression to a wide character output stream. */
         [[nodiscard]]
-        std::wostream& out(std::wostream& os) const override
-        {
-            return os << '(' << *lhs_ << to_wstring(operator_) << *rhs_ << ')';
-        }
+        std::wostream& out(std::wostream& os) const override { return os << *lhs_ << to_wstring(operator_) << *rhs_; }
     };
 }
