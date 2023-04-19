@@ -66,8 +66,27 @@ export namespace dang
 
         /** Generates expression. */
         [[nodiscard]]
-        const ast::expression* expression() { return primary(); }
+        const ast::expression* expression() { return unary(); }
 
+        /**
+         * Generates unary expression.
+         * @details @n Handles unary operators '+', '-' and 'not'.
+         */
+        [[nodiscard]]
+        const ast::expression* unary()
+        {
+            using enum enums::unary_operator;
+
+            if (match(operator_plus))
+                return new ast::unary_expression(primary(), plus);
+            if (match(operator_minus))
+                return new ast::unary_expression(primary(), minus);
+            if (match(enums::token_type::keyword_not))
+                return new ast::unary_expression(primary(), keyword_not);
+
+            return primary();
+        }
+        
         /** Generates primary expression. */
         [[nodiscard]]
         const ast::expression* primary()

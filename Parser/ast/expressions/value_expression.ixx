@@ -25,17 +25,9 @@ namespace dang::ast
         {
         }
 
-        
+
         /** AST value expression destructor. */
         ~value_expression() override { delete value_; }
-
-
-        /**
-         * Evaluates expression.
-         * @return Expression result.
-         */
-        [[nodiscard]]
-        const value* evaluate() const override { return value_; }
 
     private:
         /** AST value. */

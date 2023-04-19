@@ -20,14 +20,6 @@ namespace dang::ast
          */
         friend std::wostream& operator<<(std::wostream& os, const expression& obj) { return obj.out(os); }
 
-
-        /**
-         * Evaluates expression.
-         * @return Expression result.
-         */
-        [[nodiscard]]
-        virtual const value* evaluate() const = 0;
-
     private:
         /** Outputs expression to a wide character output stream. */
         [[nodiscard]]

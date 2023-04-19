@@ -27,33 +27,7 @@ namespace dang::ast
             : value_(value)
         {
         }
-
-
-#pragma region Conversion
-
-        /** Converts AST Decimal value to a Dang Boolean. */
-        explicit operator boolean() const override { throw; }
-
-        /** Converts AST Decimal value to a Dang Trilean. */
-        explicit operator trilean() const override { throw; }
-
-        /** Converts AST Decimal value to a Dang Integer. */
-        explicit operator integer() const override { return static_cast<integer>(value_); }
-
-        /** Reads AST Decimal value as a Dang Decimal. */
-        explicit operator decimal() const override { return value_; }
-
-        /** Converts AST Decimal value to a Dang Symbol. */
-        explicit operator symbol() const override { throw; }
-
-        /** Converts AST Decimal value to a Dang String. */
-        explicit operator string() const override { throw; }
-
-        /** Converts AST Decimal value to a Dang Array. */
-        explicit operator array<value*>() const override { throw; }
-
-#pragma endregion
-
+    
     private:
         /** Dang Decimal value. */
         decimal value_;

@@ -28,37 +28,11 @@ namespace dang::ast
         {
         }
 
-
-#pragma region Conversion
-
-        /** Reads AST Boolean value as a Dang Boolean. */
-        explicit operator boolean() const override { return value_; }
-
-        /** Converts AST Boolean value to a Dang Trilean. */
-        explicit operator trilean() const override { return value_; }
-
-        /** Converts AST Boolean value to a Dang Integer. */
-        explicit operator integer() const override { throw; }
-
-        /** Converts AST Boolean value to a Dang Decimal. */
-        explicit operator decimal() const override { throw; }
-
-        /** Converts AST Boolean value to a Dang Symbol. */
-        explicit operator symbol() const override { throw; }
-
-        /** Converts AST Boolean value to a Dang String. */
-        explicit operator string() const override { throw; }
-
-        /** Converts AST Boolean value to a Dang Array. */
-        explicit operator array<value*>() const override { throw; }
-
-#pragma endregion
-
     private:
         /** Dang Boolean value. */
         boolean value_;
 
-        
+
         /** Outputs value to a wide character output stream. */
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override { return os << (value_ ? "true" : "false"); }

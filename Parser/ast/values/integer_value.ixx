@@ -28,32 +28,6 @@ namespace dang::ast
         {
         }
 
-
-#pragma region Conversion
-
-        /** Converts AST Integer value to a Dang Boolean. */
-        explicit operator boolean() const override { throw; }
-
-        /** Converts AST Integer value to a Dang Trilean. */
-        explicit operator trilean() const override { throw; }
-
-        /** Reads AST Integer value as a Dang Integer. */
-        explicit operator integer() const override { return value_; }
-
-        /** Converts AST Integer value to a Dang Decimal. */
-        explicit operator decimal() const override { return static_cast<decimal>(value_); }
-
-        /** Converts AST Integer value to a Dang Symbol. */
-        explicit operator symbol() const override { throw; }
-
-        /** Converts AST Integer value to a Dang String. */
-        explicit operator string() const override { throw; }
-
-        /** Converts AST Integer value to a Dang Array. */
-        explicit operator array<value*>() const override { throw; }
-
-#pragma endregion
-
     private:
         /** Dang Integer value. */
         integer value_;

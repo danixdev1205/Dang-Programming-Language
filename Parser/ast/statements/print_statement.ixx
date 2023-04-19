@@ -30,10 +30,6 @@ namespace dang::ast
         /** AST print statement destructor. */
         ~print_statement() override { delete expression_; }
 
-        
-        /** Prints expression to console. */
-        void execute() const override { std::wcout << *expression_->evaluate(); }
-
     private:
         /** AST expression. */
         const expression* const expression_;

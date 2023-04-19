@@ -20,10 +20,6 @@ namespace dang::ast
          */
         friend std::wostream& operator<<(std::wostream& os, const statement& obj) { return obj.out(os); }
 
-
-        /** Executes statement. */
-        virtual void execute() const = 0;
-
     private:
         /** Outputs statement to a wide character output stream. */
         [[nodiscard]]

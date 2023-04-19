@@ -18,7 +18,7 @@ namespace dang::ast
     public:
         /** Initializes new AST (empty) block statement. */
         explicit block_statement() = default;
-        
+
         /**
          * Initializes new AST block statement.
          * @param block Block of AST statements.
@@ -31,13 +31,6 @@ namespace dang::ast
 
         /** Executes every statement in the block. */
         void emplace(const statement* const statement) { block_.emplace_back(statement); }
-        
-        /** Executes every statement in the block. */
-        void execute() const override
-        {
-            for (const auto statement : block_)
-                statement->execute();
-        }
 
     private:
         /** Block of AST statements. */
