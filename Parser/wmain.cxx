@@ -44,20 +44,13 @@ int wmain(const size_t argc, const wchar_t* const argwv[])
     boolalpha(wcerr);
     boolalpha(wclog);
 
-#pragma region Unit Tests
-#define DEBUG
-#ifdef DEBUG
+    if (argc == 1)
+        return 0;
 
-    wcout << fg::yellow << "DEBUG MODE" << resl;
-
-    const auto code = read_file(L"test.dang");
-    
-    std::wofstream output("test.out.cxx");
-    output << *parser(lexer(code).tokenize()).parse();
-    output.close();
-
-#endif
-#pragma endregion
+    if (argc == 2)
+        (std::wofstream(std::format(L"{}.cxx", argwv[1]))
+            << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
+        ).close();
 
     return 0;
 }
