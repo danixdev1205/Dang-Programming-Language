@@ -6,6 +6,7 @@ export module dang.ast.statements;
 
 
 export import "statements/statement.hxx";
+export import :entry_statement;
 export import :block_statement;
 export import :print_statement;
 export import :variable_statement;

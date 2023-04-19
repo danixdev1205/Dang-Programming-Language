@@ -27,12 +27,12 @@ export namespace dang
 
         /**
          * Parses interpreted elements.
-         * @return Runnable block statement.
+         * @return Entry point.
          */
         [[nodiscard]]
-        const ast::block_statement* parse()
+        const ast::entry_statement* parse()
         {
-            const auto block = new ast::block_statement();
+            const auto block = new ast::entry_statement();
 
             while (*get() != end_of_file)
                 block->emplace(statement());
