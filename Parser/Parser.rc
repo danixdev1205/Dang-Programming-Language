@@ -1,0 +1,25 @@
+﻿IDI_APP ICON "../Resources/ICO/Logo.ico"
+
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "danixdev1205"
+            VALUE "FileDescription", "Dang is high level trans-compiled language for educational purposes."
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "Dang Interpreter"
+            VALUE "Original Filename", "dang.exe"
+            VALUE "ProductName", "Dang Parser"
+            VALUE "ProductVersion", "1.0.0.0"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

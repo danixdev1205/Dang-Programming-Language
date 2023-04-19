@@ -163,6 +163,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ansi\ansi.ixx" />
+    <ClCompile Include="ansi\colors\ansi.colors.ixx" />
+    <ClCompile Include="ansi\colors\background.ixx" />
+    <ClCompile Include="ansi\colors\foreground.ixx" />
+    <ClCompile Include="ansi\styles\ansi.styles.ixx" />
+    <ClCompile Include="ansi\styles\set.ixx" />
+    <ClCompile Include="ansi\styles\unset.ixx" />
+    <ClCompile Include="ast\dang.ast.expressions.ixx" />
+    <ClCompile Include="ast\dang.ast.ixx" />
+    <ClCompile Include="ast\dang.ast.statements.ixx" />
+    <ClCompile Include="ast\dang.ast.values.ixx" />
+    <ClCompile Include="ast\expressions\binary_expression.ixx" />
+    <ClCompile Include="ast\expressions\unary_expression.ixx" />
+    <ClCompile Include="ast\expressions\value_expression.ixx" />
+    <ClCompile Include="ast\statements\block_statement.ixx" />
+    <ClCompile Include="ast\statements\print_statement.ixx" />
+    <ClCompile Include="ast\values\boolean_value.ixx" />
+    <ClCompile Include="ast\values\decimal_value.ixx" />
+    <ClCompile Include="ast\values\integer_value.ixx" />
+    <ClCompile Include="ast\values\string_value.ixx" />
+    <ClCompile Include="ast\values\symbol_value.ixx" />
+    <ClCompile Include="enums\binary_operator.ixx" />
+    <ClCompile Include="enums\dang.enums.ixx" />
+    <ClCompile Include="enums\token_type.ixx" />
+    <ClCompile Include="enums\unary_operator.ixx" />
+    <ClCompile Include="parser\dang.parser.ixx" />
     <ClCompile Include="wmain.cxx" />
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +198,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ast\" />
-    <Folder Include="enums\" />
-    <Folder Include="parser\" />
+    <ResourceCompile Include="Parser.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ast\expressions\expression.hxx" />
+    <ClInclude Include="ast\statements\statement.hxx" />
+    <ClInclude Include="ast\values\value.hxx" />
+    <ClInclude Include="parser\lexer.hxx" />
+    <ClInclude Include="parser\parser.hxx" />
+    <ClInclude Include="parser\token.hxx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
