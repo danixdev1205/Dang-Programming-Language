@@ -66,8 +66,207 @@ export namespace dang
 
         /** Generates expression. */
         [[nodiscard]]
-        const ast::expression* expression() { return unary(); }
+        const ast::expression* expression() { return binary_and(); }
 
+        /**
+         * Generates binary logical and expression.
+         * @details @n Handles binary logical 'and'.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_and()
+        {
+            auto expr = binary_or();
+
+            while (true)
+            {
+                if (match(keyword_and))
+                {
+                    expr = new ast::binary_expression(expr, binary_or(), enums::binary_operator::keyword_and);
+                    continue;
+                }
+                
+                break;
+            }
+
+            return expr;
+        }
+        
+        /**
+         * Generates binary logical or expression.
+         * @details @n Handles binary logical 'or'.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_or()
+        {
+            auto expr = binary_xor();
+
+            while (true)
+            {
+                if (match(keyword_or))
+                {
+                    expr = new ast::binary_expression(expr, binary_xor(), enums::binary_operator::keyword_or);
+                    continue;
+                }
+                
+                break;
+            }
+
+            return expr;
+        }
+        
+        /**
+         * Generates binary logical exclusive or expression.
+         * @details @n Handles binary logical exclusive 'xor'.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_xor()
+        {
+            auto expr = binary_comparison();
+
+            while (true)
+            {
+                if (match(keyword_xor))
+                {
+                    expr = new ast::binary_expression(expr, binary_comparison(), enums::binary_operator::keyword_xor);
+                    continue;
+                }
+                
+                break;
+            }
+
+            return expr;
+        }
+        
+        /**
+         * Generates binary comparison expression.
+         * @details @n Handles binary comparison '==' and '!='.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_comparison()
+        {
+            using enum enums::binary_operator;
+
+            auto expr = binary_relational();
+
+            while (true)
+            {
+                if (match(operator_equals_equals))
+                {
+                    expr = new ast::binary_expression(expr, binary_relational(), equals_equals);
+                    continue;
+                }
+                if (match(operator_exclamation_equals))
+                {
+                    expr = new ast::binary_expression(expr, binary_relational(), exclamation_equals);
+                    continue;
+                }
+                
+                break;
+            }
+
+            return expr;
+        }
+        
+        /**
+         * Generates binary relational expression.
+         * @details @n Handles binary relational '<', '<=', '>' and '>='.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_relational()
+        {
+            using enum enums::binary_operator;
+
+            auto expr = binary_additive();
+
+            while (true)
+            {
+                if (match(operator_less))
+                {
+                    expr = new ast::binary_expression(expr, binary_additive(), less);
+                    continue;
+                }
+                if (match(operator_less_equals))
+                {
+                    expr = new ast::binary_expression(expr, binary_additive(), less_equals);
+                    continue;
+                }
+                if (match(operator_greater))
+                {
+                    expr = new ast::binary_expression(expr, binary_additive(), greater);
+                    continue;
+                }
+                if (match(operator_greater_equals))
+                {
+                    expr = new ast::binary_expression(expr, binary_additive(), greater_equals);
+                    continue;
+                }
+                
+                break;
+            }
+
+            return expr;
+        }
+        
+        /**
+         * Generates binary additive expression.
+         * @details @n Handles binary operators '+' and '-'.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_additive()
+        {
+            using enum enums::binary_operator;
+
+            auto expr = binary_multiplicative();
+
+            while (true)
+            {
+                if (match(operator_plus))
+                {
+                    expr = new ast::binary_expression(expr, binary_multiplicative(), plus);
+                    continue;
+                }
+                if (match(operator_minus))
+                {
+                    expr = new ast::binary_expression(expr, binary_multiplicative(), minus);
+                    continue;
+                }
+
+                break;
+            }
+
+            return expr;
+        }
+
+        /**
+         * Generates binary multiplicative expression.
+         * @details @n Handles binary multiplicative '*' and '/'.
+         */
+        [[nodiscard]]
+        const ast::expression* binary_multiplicative()
+        {
+            using enum enums::binary_operator;
+
+            auto expr = unary();
+
+            while (true)
+            {
+                if (match(operator_asterisk))
+                {
+                    expr = new ast::binary_expression(expr, unary(), asterisk);
+                    continue;
+                }
+                if (match(operator_slash))
+                {
+                    expr = new ast::binary_expression(expr, unary(), slash);
+                    continue;
+                }
+
+                break;
+            }
+
+            return expr;
+        }
+        
         /**
          * Generates unary expression.
          * @details @n Handles unary operators '+', '-' and 'not'.

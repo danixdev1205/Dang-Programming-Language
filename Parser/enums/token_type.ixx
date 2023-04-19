@@ -200,12 +200,8 @@ export namespace dang::enums
             return L"-";
         case token_type::operator_asterisk:
             return L"*";
-        case token_type::operator_asterisk_asterisk:
-            return L"**";
         case token_type::operator_slash:
             return L"/";
-        case token_type::operator_slash_slash:
-            return L"//";
         case token_type::operator_modulus:
             return L"%";
         case token_type::operator_equals:
@@ -224,8 +220,6 @@ export namespace dang::enums
             return L">=";
         case token_type::operator_question:
             return L"?";
-        case token_type::operator_question_question:
-            return L"??";
         case token_type::operator_colon:
             return L":";
 
