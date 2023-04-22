@@ -83,6 +83,12 @@ export namespace dang::enums
         /** @code ) @endcode */
         container_paren_right,
 
+        /** @code { @endcode */
+        container_brace_left,
+
+        /** @code } @endcode */
+        container_brace_right,
+
 #pragma endregion
 
 #pragma region Literals
@@ -187,6 +193,18 @@ export namespace dang::enums
          */
         keyword_const,
 
+        /**
+         * If statement.
+         * @code if @endcode
+         */
+        keyword_if,
+
+        /**
+         * Else statement.
+         * @code else @endcode
+         */
+        keyword_else,
+
 #pragma endregion
 
         /** User-defined identifier. */
@@ -239,6 +257,10 @@ export namespace dang::enums
             return L"(";
         case token_type::container_paren_right:
             return L")";
+        case token_type::container_brace_left:
+            return L"{";
+        case token_type::container_brace_right:
+            return L"}";
 
         case token_type::literal_null:
             return L"null";
@@ -273,6 +295,10 @@ export namespace dang::enums
             return L"var";
         case token_type::keyword_const:
             return L"const";
+        case token_type::keyword_if:
+            return L"if";
+        case token_type::keyword_else:
+            return L"else";
 
         case token_type::identifier:
             return L"identifier";

@@ -163,6 +163,13 @@ export namespace dang
                 case L')':
                     add(container_paren_right, line_, column_);
                     break;
+
+                case L'{':
+                    add(container_brace_left, line_, column_);
+                    break;
+                case L'}':
+                    add(container_brace_right, line_, column_);
+                    break;
                     
                 case L'"':
                     tokenize_string(line_, column_);
@@ -284,6 +291,10 @@ export namespace dang
                 add(keyword_var, line, column);
             else if (res == L"const")
                 add(keyword_const, line, column);
+            else if (res == L"if")
+                add(keyword_if, line, column);
+            else if (res == L"else")
+                add(keyword_else, line, column);
             else
                 add(identifier, res, line, column);
         }

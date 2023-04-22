@@ -50,7 +50,7 @@ namespace dang::ast
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override
         {
-            return os << type_ << " " << identifier_ << "=" << *value_ << ";";
+            return os << "const " << type_ << " " << identifier_ << "=" << *value_ << ";";
         }
     };
 }

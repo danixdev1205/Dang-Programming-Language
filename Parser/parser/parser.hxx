@@ -84,6 +84,8 @@ export namespace dang
                 
                 return new ast::constant_statement(expression(), name->value(), type == nullptr ? L"auto" : type->value());
             }
+            if (match(keyword_else))
+                return new ast::else_statement(body());
 
             return assignment_statement();
         }
@@ -114,7 +116,38 @@ export namespace dang
                 throw;
             }
 
+            return if_statement();
+        }
+
+        /** Generates if statement. */
+        [[nodiscard]]
+        const ast::statement* if_statement()
+        {
+            if (match(keyword_if))
+            {
+                const auto cond = expression();
+                return new ast::if_statement(cond, body());
+            }
+
             throw;
+        }
+        
+        /** Generates block statement or a single statement. */
+        [[nodiscard]]
+        const ast::statement* body()
+        {
+            if (match(container_brace_left))
+            {
+                const auto block = new ast::block_statement();
+
+                while (*get() != container_brace_right)
+                    block->emplace(statement());
+
+                skip(container_brace_right);
+                return block;
+            }
+
+            return statement();
         }
         
         /** Generates expression. */
@@ -353,7 +386,7 @@ export namespace dang
             if (match(literal_logical_false))
                 return new ast::value_expression(new ast::boolean_value(false));
             if (match(literal_logical_true))
-                return new ast::value_expression(new ast::boolean_value(false));
+                return new ast::value_expression(new ast::boolean_value(true));
             if (match(literal_integer))
                 return new ast::value_expression(new ast::integer_value(cur->read<integer>()));
             if (match(literal_decimal))
@@ -365,6 +398,14 @@ export namespace dang
 
             if (match(identifier))
                 return new ast::variable_expression(cur->value());
+
+            if (match(container_paren_left))
+            {
+                const auto expr = expression();
+                skip(container_paren_right);
+
+                return expr;
+            }
             
             throw;
         }
