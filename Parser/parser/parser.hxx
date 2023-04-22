@@ -88,7 +88,15 @@ export namespace dang
             }
             if (match(keyword_else))
                 return new ast::else_statement(body());
-
+            if (match(keyword_break))
+                return new ast::break_statement();
+            if (match(keyword_continue))
+                return new ast::continue_statement();
+            if (match(keyword_return))
+                return new ast::return_statement(expression());
+            if (match(keyword_exit))
+                return new ast::exit_statement(expression());
+            
             return assignment_statement();
         }
 
@@ -121,12 +129,15 @@ export namespace dang
             return flow_control();
         }
 
-        /** Generates if and while statements. */
+        /** Generates if, while, do-while and for statements. */
         [[nodiscard]]
         const ast::statement* flow_control()
         {
             if (match(keyword_if))
-                return new ast::if_statement(expression(), body());
+            {
+                const auto cond = expression();                
+                return new ast::if_statement(cond, body());
+            }
             if (match(keyword_do))
             {
                 const auto loop = body();
@@ -135,21 +146,16 @@ export namespace dang
                 return new ast::do_statement(expression(), loop);
             }
             if (match(keyword_while))
-                return new ast::while_statement(expression(), body());
+            {
+                const auto cond = expression();
+                return new ast::while_statement(cond, body());
+            }
             if (match(keyword_for))
             {
-                std::wclog << "for\n";
-                
                 const auto init = statement();
-                std::wclog << "!!\n";
-                
                 const auto cond = expression();
-                std::wclog << "!!\n";
-                
-                const auto mod = statement();
-                std::wclog << "!!\n";
-                
-                return new ast::for_statement(init, cond, mod, body());
+                const auto modi = statement();
+                return new ast::for_statement(init, cond, modi, body());
             }
 
             throw;

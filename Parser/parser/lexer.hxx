@@ -301,6 +301,14 @@ export namespace dang
                 add(keyword_do, line, column);
             else if (res == L"for")
                 add(keyword_for, line, column);
+            else if (res == L"break")
+                add(keyword_break, line, column);
+            else if (res == L"continue")
+                add(keyword_continue, line, column);
+            else if (res == L"return")
+                add(keyword_return, line, column);
+            else if (res == L"exit")
+                add(keyword_exit, line, column);
             else
                 add(identifier, res, line, column);
         }

@@ -223,6 +223,30 @@ export namespace dang::enums
          */
         keyword_for,
 
+        /**
+         * Loop break statement.
+         * @code break @endcode
+         */
+        keyword_break,
+
+        /**
+         * Loop skip iteration statement.
+         * @code continue @endcode
+         */
+        keyword_continue,
+        
+        /**
+         * Return statement.
+         * @code return @endcode
+         */
+        keyword_return,
+
+        /**
+         * Program termination statement.
+         * @code exit @endcode
+         */
+        keyword_exit,
+        
 #pragma endregion
 
         /** User-defined identifier. */
@@ -323,6 +347,14 @@ export namespace dang::enums
             return L"do";
         case token_type::keyword_for:
             return L"for";
+        case token_type::keyword_break:
+            return L"break";
+        case token_type::keyword_continue:
+            return L"continue";
+        case token_type::keyword_return:
+            return L"return";
+        case token_type::keyword_exit:
+            return L"exit";
 
         case token_type::identifier:
             return L"identifier";

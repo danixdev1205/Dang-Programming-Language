@@ -22,3 +22,8 @@ export import :else_statement;
 export import :while_statement;
 export import :do_statement;
 export import :for_statement;
+
+export import :break_statement;
+export import :continue_statement;
+export import :return_statement;
+export import :exit_statement;
