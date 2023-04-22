@@ -295,6 +295,12 @@ export namespace dang
                 add(keyword_if, line, column);
             else if (res == L"else")
                 add(keyword_else, line, column);
+            else if (res == L"while")
+                add(keyword_while, line, column);
+            else if (res == L"do")
+                add(keyword_do, line, column);
+            else if (res == L"for")
+                add(keyword_for, line, column);
             else
                 add(identifier, res, line, column);
         }

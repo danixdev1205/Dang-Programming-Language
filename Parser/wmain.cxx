@@ -51,6 +51,6 @@ int wmain(const size_t argc, const wchar_t* const argwv[])
         (std::wofstream(std::format(L"{}.cxx", argwv[1]))
             << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
         ).close();
-
+    
     return 0;
 }

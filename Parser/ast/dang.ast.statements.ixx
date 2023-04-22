@@ -18,3 +18,7 @@ export import :assignment_statement;
 
 export import :if_statement;
 export import :else_statement;
+
+export import :while_statement;
+export import :do_statement;
+export import :for_statement;

@@ -205,6 +205,24 @@ export namespace dang::enums
          */
         keyword_else,
 
+        /**
+         * While statement.
+         * @code while @endcode
+         */
+        keyword_while,
+
+        /**
+         * Do statement.
+         * @code do @endcode
+         */
+        keyword_do,
+
+        /**
+         * For statement.
+         * @code for @endcode
+         */
+        keyword_for,
+
 #pragma endregion
 
         /** User-defined identifier. */
@@ -299,6 +317,12 @@ export namespace dang::enums
             return L"if";
         case token_type::keyword_else:
             return L"else";
+        case token_type::keyword_while:
+            return L"while";
+        case token_type::keyword_do:
+            return L"do";
+        case token_type::keyword_for:
+            return L"for";
 
         case token_type::identifier:
             return L"identifier";

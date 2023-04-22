@@ -67,10 +67,11 @@ export namespace dang
 
                 if (match(operator_colon))
                     type = consume(identifier);
-                
+
                 skip(operator_equals);
-                
-                return new ast::variable_statement(expression(), name->value(), type == nullptr ? L"auto" : type->value());
+
+                return new ast::variable_statement(expression(), name->value(),
+                                                   type == nullptr ? L"auto" : type->value());
             }
             if (match(keyword_const))
             {
@@ -79,10 +80,11 @@ export namespace dang
 
                 if (match(operator_colon))
                     type = consume(identifier);
-                
+
                 skip(operator_equals);
-                
-                return new ast::constant_statement(expression(), name->value(), type == nullptr ? L"auto" : type->value());
+
+                return new ast::constant_statement(expression(), name->value(),
+                                                   type == nullptr ? L"auto" : type->value());
             }
             if (match(keyword_else))
                 return new ast::else_statement(body());
@@ -95,9 +97,9 @@ export namespace dang
         const ast::statement* assignment_statement()
         {
             using enum enums::assignment_operator;
-            
+
             const auto cur = get();
-            
+
             if (match(identifier))
             {
                 if (match(operator_equals))
@@ -112,26 +114,47 @@ export namespace dang
                     return new ast::assignment_statement(expression(), cur->value(), slash_equals);
                 if (match(operator_modulus_equals))
                     return new ast::assignment_statement(expression(), cur->value(), modulus_equals);
-                
+
                 throw;
             }
 
-            return if_statement();
+            return flow_control();
         }
 
-        /** Generates if statement. */
+        /** Generates if and while statements. */
         [[nodiscard]]
-        const ast::statement* if_statement()
+        const ast::statement* flow_control()
         {
             if (match(keyword_if))
+                return new ast::if_statement(expression(), body());
+            if (match(keyword_do))
             {
+                const auto loop = body();
+                skip(keyword_while);
+
+                return new ast::do_statement(expression(), loop);
+            }
+            if (match(keyword_while))
+                return new ast::while_statement(expression(), body());
+            if (match(keyword_for))
+            {
+                std::wclog << "for\n";
+                
+                const auto init = statement();
+                std::wclog << "!!\n";
+                
                 const auto cond = expression();
-                return new ast::if_statement(cond, body());
+                std::wclog << "!!\n";
+                
+                const auto mod = statement();
+                std::wclog << "!!\n";
+                
+                return new ast::for_statement(init, cond, mod, body());
             }
 
             throw;
         }
-        
+
         /** Generates block statement or a single statement. */
         [[nodiscard]]
         const ast::statement* body()
@@ -149,7 +172,7 @@ export namespace dang
 
             return statement();
         }
-        
+
         /** Generates expression. */
         [[nodiscard]]
         const ast::expression* expression() { return binary_and(); }
@@ -170,13 +193,13 @@ export namespace dang
                     expr = new ast::binary_expression(expr, binary_or(), enums::binary_operator::keyword_and);
                     continue;
                 }
-                
+
                 break;
             }
 
             return expr;
         }
-        
+
         /**
          * Generates binary logical or expression.
          * @details @n Handles binary logical 'or'.
@@ -193,13 +216,13 @@ export namespace dang
                     expr = new ast::binary_expression(expr, binary_xor(), enums::binary_operator::keyword_or);
                     continue;
                 }
-                
+
                 break;
             }
 
             return expr;
         }
-        
+
         /**
          * Generates binary logical exclusive or expression.
          * @details @n Handles binary logical exclusive 'xor'.
@@ -216,13 +239,13 @@ export namespace dang
                     expr = new ast::binary_expression(expr, binary_comparison(), enums::binary_operator::keyword_xor);
                     continue;
                 }
-                
+
                 break;
             }
 
             return expr;
         }
-        
+
         /**
          * Generates binary comparison expression.
          * @details @n Handles binary comparison '==' and '!='.
@@ -246,13 +269,13 @@ export namespace dang
                     expr = new ast::binary_expression(expr, binary_relational(), exclamation_equals);
                     continue;
                 }
-                
+
                 break;
             }
 
             return expr;
         }
-        
+
         /**
          * Generates binary relational expression.
          * @details @n Handles binary relational '<', '<=', '>' and '>='.
@@ -286,13 +309,13 @@ export namespace dang
                     expr = new ast::binary_expression(expr, binary_additive(), greater_equals);
                     continue;
                 }
-                
+
                 break;
             }
 
             return expr;
         }
-        
+
         /**
          * Generates binary additive expression.
          * @details @n Handles binary operators '+' and '-'.
@@ -357,7 +380,7 @@ export namespace dang
 
             return expr;
         }
-        
+
         /**
          * Generates unary expression.
          * @details @n Handles unary operators '+', '-' and 'not'.
@@ -376,7 +399,7 @@ export namespace dang
 
             return primary();
         }
-        
+
         /** Generates primary expression. */
         [[nodiscard]]
         const ast::expression* primary()
@@ -406,7 +429,7 @@ export namespace dang
 
                 return expr;
             }
-            
+
             throw;
         }
 
