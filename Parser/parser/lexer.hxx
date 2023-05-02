@@ -40,11 +40,11 @@ export namespace dang
                 case L'+':
                     switch (next())
                     {
-                case L'=':
-                    add(operator_plus_equals, line_, column_ - 1);
+                    case L'=':
+                        add(operator_plus_equals, line_, column_ - 1);
                         break;
-                default:
-                    add(operator_plus, line_, column_);
+                    default:
+                        add(operator_plus, line_, column_);
                         continue;
                     }
                     break;
@@ -52,11 +52,14 @@ export namespace dang
                 case L'-':
                     switch (next())
                     {
-                case L'=':
-                    add(operator_minus_equals, line_, column_ - 1);
+                    case L'=':
+                        add(operator_minus_equals, line_, column_ - 1);
                         break;
-                default:
-                    add(operator_minus, line_, column_);
+                    case L'>':
+                        add(operator_arrow, line_, column_ - 1);
+                        break;
+                    default:
+                        add(operator_minus, line_, column_);
                         continue;
                     }
                     break;
@@ -89,19 +92,19 @@ export namespace dang
                             continue;
                         }
                     break;
-                    
+
                 case L'%':
                     switch (next())
                     {
-                case L'=':
-                    add(operator_modulus_equals, line_, column_ - 1);
+                    case L'=':
+                        add(operator_modulus_equals, line_, column_ - 1);
                         break;
-                default:
-                    add(operator_modulus, line_, column_);
+                    default:
+                        add(operator_modulus, line_, column_);
                         continue;
                     }
                     break;
-                    
+
                 case L'=':
                     switch (next())
                     {
@@ -170,7 +173,11 @@ export namespace dang
                 case L'}':
                     add(container_brace_right, line_, column_);
                     break;
-                    
+
+                case L',':
+                    add(comma, line_, column_);
+                    break;
+
                 case L'"':
                     tokenize_string(line_, column_);
                     continue;
@@ -309,6 +316,8 @@ export namespace dang
                 add(keyword_return, line, column);
             else if (res == L"exit")
                 add(keyword_exit, line, column);
+            else if (res == L"func")
+                add(keyword_func, line, column);
             else
                 add(identifier, res, line, column);
         }

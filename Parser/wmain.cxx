@@ -1,3 +1,6 @@
+#define VERSION L"1.0.0"
+
+
 import ansi.colors;
 import dang;
 import dang.parser;
@@ -47,10 +50,23 @@ int wmain(const size_t argc, const wchar_t* const argwv[])
     if (argc == 1)
         return 0;
 
-    if (argc == 2)
-        (std::wofstream(std::format(L"{}.cxx", argwv[1]))
+    auto foo = []() -> void
+    {
+        wcout << "dad";
+    };
+
+    foo();
+    
+    (std::wofstream(std::format(L"{}.cxx", argwv[1]))
             << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
         ).close();
     
+    // if (wcscmp(argwv[1], L"--version") == true)
+    //     wcout << VERSION << resl;
+    // else
+    //     (std::wofstream(std::format(L"{}.cxx", argwv[1]))
+    //         << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
+    //     ).close();
+
     return 0;
 }

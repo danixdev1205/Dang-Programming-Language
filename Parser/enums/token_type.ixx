@@ -25,6 +25,9 @@ export namespace dang::enums
         /** @code - @endcode */
         operator_minus,
 
+        /** @code -> @endcode */
+        operator_arrow,
+        
         /** @code -= @endcode */
         operator_minus_equals,
 
@@ -246,8 +249,16 @@ export namespace dang::enums
          * @code exit @endcode
          */
         keyword_exit,
+
+        /**
+         * Function declaration statement.
+         * @code func @endcode
+         */
+        keyword_func,
         
 #pragma endregion
+
+        comma,
 
         /** User-defined identifier. */
         identifier,
@@ -270,6 +281,8 @@ export namespace dang::enums
             return L"+";
         case token_type::operator_minus:
             return L"-";
+        case token_type::operator_arrow:
+            return L"->";
         case token_type::operator_asterisk:
             return L"*";
         case token_type::operator_slash:
@@ -303,6 +316,9 @@ export namespace dang::enums
             return L"{";
         case token_type::container_brace_right:
             return L"}";
+            
+        case token_type::comma:
+            return L",";
 
         case token_type::literal_null:
             return L"null";

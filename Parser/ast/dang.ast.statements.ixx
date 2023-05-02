@@ -27,3 +27,7 @@ export import :break_statement;
 export import :continue_statement;
 export import :return_statement;
 export import :exit_statement;
+
+export import :function_statement;
+export import :func_statement;
+export import :param_statement;

@@ -58,6 +58,8 @@ export namespace dang
         [[nodiscard]]
         const ast::statement* statement()
         {
+            const auto cur = get();
+
             if (match(keyword_print))
                 return new ast::print_statement(expression());
             if (match(keyword_var))
@@ -86,6 +88,7 @@ export namespace dang
                 return new ast::constant_statement(expression(), name->value(),
                                                    type == nullptr ? L"auto" : type->value());
             }
+
             if (match(keyword_else))
                 return new ast::else_statement(body());
             if (match(keyword_break))
@@ -96,7 +99,49 @@ export namespace dang
                 return new ast::return_statement(expression());
             if (match(keyword_exit))
                 return new ast::exit_statement(expression());
-            
+            if (match(keyword_func))
+            {
+                const auto name = consume(identifier);
+                std::vector<const ast::statement*> params;
+
+                skip(container_paren_left);
+                while (!look(container_paren_right))
+                {
+                    const auto na = consume(identifier);
+                    skip(operator_colon);
+                    const token* type = consume(identifier);
+                    
+                    params.emplace_back(
+                        new ast::param_statement(na->value(), type->value()));
+
+                    if (!match(comma))
+                        break;
+                }
+                skip(container_paren_right);
+
+                std::wstring type = L"void";
+                if (match(operator_arrow))
+                    type = consume(identifier)->value();
+
+                return new ast::func_statement(body(), name->value(), params, type);
+            }
+
+            if (match(identifier) && match(container_paren_left))
+            {
+                std::vector<const ast::expression*> params;
+
+                while (!look(container_paren_right))
+                {
+                    params.emplace_back(expression());
+
+                    if (!match(comma))
+                        break;
+                }
+
+                skip(container_paren_right);
+                return new ast::function_statement(cur->value(), params);
+            }
+
             return assignment_statement();
         }
 
@@ -135,7 +180,7 @@ export namespace dang
         {
             if (match(keyword_if))
             {
-                const auto cond = expression();                
+                const auto cond = expression();
                 return new ast::if_statement(cond, body());
             }
             if (match(keyword_do))
@@ -426,7 +471,25 @@ export namespace dang
                 return new ast::value_expression(new ast::string_value(cur->read<string>()));
 
             if (match(identifier))
+            {
+                if (match(container_paren_left))
+                {
+                    std::vector<const ast::expression*> params;
+
+                    while (!look(container_paren_right))
+                    {
+                        params.emplace_back(expression());
+
+                        if (!match(comma))
+                            break;
+                    }
+
+                    skip(container_paren_right);
+                    return new ast::function_expression(cur->value(), params);
+                }
+
                 return new ast::variable_expression(cur->value());
+            }
 
             if (match(container_paren_left))
             {
@@ -476,7 +539,7 @@ export namespace dang
          * @return Whether the types match.
          */
         [[nodiscard]]
-        bool look(const enums::token_type type, const size_t offset = 1) const { return *get(offset) == type; }
+        bool look(const enums::token_type type, const size_t offset = 0) const { return *get(offset) == type; }
 
         /**
          * Consumes current interpreted element if the type matches.
