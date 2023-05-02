@@ -278,8 +278,6 @@ export namespace dang
                 add(keyword_print, line, column);
             else if (res == L"println")
                 add(keyword_println, line, column);
-            else if (res == L"read")
-                add(keyword_read, line, column);
             else if (res == L"null")
                 add(literal_null, line, column);
             else if (res == L"true")

@@ -41,7 +41,7 @@ namespace dang::ast
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override
         {
-            os << "#include <iostream>\nint main()\n{\n";
+            os << "#include <iostream>\n#include <string>\ntypedef std::string str;template<typename T>T read();template<>int read(){int o;std::cin>>o;return o;}template<>char read(){char o;std::cin>>o;return o;}template<>float read(){float o;std::cin>>o;return o;}template<>str read(){str o;std::cin>>o;return o;}\nint main()\n{\n";
             for (const auto statement : block_)
                 os << *statement << '\n';
 

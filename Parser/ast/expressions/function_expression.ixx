@@ -26,16 +26,17 @@ namespace dang::ast
         {
         }
 
-        explicit function_expression(const std::wstring& identifier, std::vector<const expression*> parameters)
+        explicit function_expression(const std::wstring& identifier, std::vector<const expression*> parameters,
+                                     const std::wstring& type)
             : identifier_(identifier),
+              type_(type),
               parameters_(parameters)
         {
         }
 
     private:
-        /** function identifier. */
-        const std::wstring identifier_;
-        
+        const std::wstring identifier_, type_;
+
         std::vector<const expression*> parameters_;
 
 
@@ -43,7 +44,12 @@ namespace dang::ast
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override
         {
-            os << identifier_ << "(";
+            os << identifier_;
+
+            if (!type_.empty())
+                os << "<" << type_ << ">";
+            
+            os << "(";
 
             for (auto i = 0; i < parameters_.size(); i++)
             {
@@ -52,7 +58,7 @@ namespace dang::ast
                 if (i != parameters_.size() - 1)
                     os << ",";
             }
-            
+
             return os << ")";
         }
     };

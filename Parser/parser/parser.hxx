@@ -474,10 +474,18 @@ export namespace dang
 
             if (match(identifier))
             {
-                if (match(container_paren_left))
+                if (match(container_paren_left) || look(operator_less))
                 {
                     std::vector<const ast::expression*> params;
 
+                    std::wstring type; 
+                    if (match(operator_less))
+                    {
+                        type = consume(identifier)->value();
+                        skip(operator_greater);
+                        skip(container_paren_left);
+                    }
+                    
                     while (!look(container_paren_right))
                     {
                         params.emplace_back(expression());
@@ -487,7 +495,7 @@ export namespace dang
                     }
 
                     skip(container_paren_right);
-                    return new ast::function_expression(cur->value(), params);
+                    return new ast::function_expression(cur->value(), params, type);
                 }
 
                 return new ast::variable_expression(cur->value());

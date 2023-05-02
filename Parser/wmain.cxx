@@ -3,6 +3,9 @@ import dang;
 import dang.parser;
 import std;
 
+/*
+ * 
+ */
 
 using namespace ansi;
 using namespace dang;
@@ -35,8 +38,6 @@ int main(const size_t argc, const char* const argv[])
             << *parser(lexer(read_file(argv[1])).tokenize()).parse()
         ).close();
 
-    cout << std::format("\"./bin/g++\" -o DangProgram \"{0}\"", cxx).c_str();
-    system(std::format("\"\"./bin/g++\" -o DangProgram \"{0}\"\"", cxx).c_str());
-    
-    //system();
+    // cout << std::format("\"./bin/g++\" -std=c++17 \"{0}\" -o DangProgram", cxx).c_str();
+    system(std::format("\"\"./bin/g++\" -o DangProgram \"{0}\" -std=c++0x\"", cxx).c_str());
 }
