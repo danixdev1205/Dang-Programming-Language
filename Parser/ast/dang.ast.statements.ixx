@@ -11,6 +11,7 @@ export import :entry_statement;
 export import :block_statement;
 
 export import :print_statement;
+export import :println_statement;
 
 export import :variable_statement;
 export import :constant_statement;

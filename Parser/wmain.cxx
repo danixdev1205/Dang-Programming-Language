@@ -1,6 +1,3 @@
-#define VERSION L"1.0.0"
-
-
 import ansi.colors;
 import dang;
 import dang.parser;
@@ -17,7 +14,7 @@ using namespace std;
  * @param filename Path to the file.
  * @return File wide character content.
  */
-std::wstring read_file(const wchar_t* const filename)
+std::wstring read_file(const char* const filename)
 {
     std::wifstream file(filename);
 
@@ -28,45 +25,18 @@ std::wstring read_file(const wchar_t* const filename)
     return str;
 }
 
-
-/**
- * Program wide character entry point.
- * @param argc Command line argument count.
- * @param argwv Command line arguments wide character values.
- * @return Program exit code.
- * @retval 0 Success.
- */
-int wmain(const size_t argc, const wchar_t* const argwv[])
+int main(const size_t argc, const char* const argv[])
 {
-    _setmode(_fileno(__acrt_iob_func(0)), 0x10000);
-    _setmode(_fileno(__acrt_iob_func(1)), 0x10000);
-    _setmode(_fileno(__acrt_iob_func(2)), 0x10000);
-
-    boolalpha(wcin);
-    boolalpha(wcout);
-    boolalpha(wcerr);
-    boolalpha(wclog);
-
     if (argc == 1)
         return 0;
-
-    auto foo = []() -> void
-    {
-        wcout << "dad";
-    };
-
-    foo();
     
-    (std::wofstream(std::format(L"{}.cxx", argwv[1]))
-            << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
+    const auto cxx = std::format("{}.cxx", argv[1]);    
+    (std::wofstream(cxx)
+            << *parser(lexer(read_file(argv[1])).tokenize()).parse()
         ).close();
-    
-    // if (wcscmp(argwv[1], L"--version") == true)
-    //     wcout << VERSION << resl;
-    // else
-    //     (std::wofstream(std::format(L"{}.cxx", argwv[1]))
-    //         << *parser(lexer(read_file(argwv[1])).tokenize()).parse()
-    //     ).close();
 
-    return 0;
+    cout << std::format("\"./bin/g++\" -o DangProgram \"{0}\"", cxx).c_str();
+    system(std::format("\"\"./bin/g++\" -o DangProgram \"{0}\"\"", cxx).c_str());
+    
+    //system();
 }

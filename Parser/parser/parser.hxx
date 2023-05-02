@@ -62,6 +62,8 @@ export namespace dang
 
             if (match(keyword_print))
                 return new ast::print_statement(expression());
+            if (match(keyword_println))
+                return new ast::println_statement(expression());
             if (match(keyword_var))
             {
                 const auto name = consume(identifier);

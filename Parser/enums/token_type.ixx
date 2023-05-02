@@ -155,6 +155,18 @@ export namespace dang::enums
         keyword_print,
 
         /**
+         * Print keyword.
+         * @code print @endcode
+         */
+        keyword_println,
+
+        /**
+         * Print keyword.
+         * @code print @endcode
+         */
+        keyword_read,
+        
+        /**
          * Logical inverse.
          * @code not @endcode
          */

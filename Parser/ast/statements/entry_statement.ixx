@@ -41,11 +41,11 @@ namespace dang::ast
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override
         {
-            os << "int wmain()\n{\n";
+            os << "#include <iostream>\nint main()\n{\n";
             for (const auto statement : block_)
                 os << *statement << '\n';
 
-            return os << "}";
+            return os << "return 0;\n}\n";
         }
     };
 }
