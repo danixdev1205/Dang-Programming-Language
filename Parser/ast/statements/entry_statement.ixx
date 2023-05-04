@@ -41,7 +41,10 @@ namespace dang::ast
         [[nodiscard]]
         std::wostream& out(std::wostream& os) const override
         {
-            os << "#include <iostream>\n#include <string>\ntypedef std::string str;template<typename T>T read();template<>int read(){int o;std::cin>>o;return o;}template<>char read(){char o;std::cin>>o;return o;}template<>float read(){float o;std::cin>>o;return o;}template<>str read(){str o;std::cin>>o;return o;}\nint main()\n{\n";
+            os << "#include <iostream>\n#include <cstdio>\n#include <cstdlib>\n#include <string>\ntypedef std::string str;\n";
+            os << "\nstr readFile(str file){FILE* ptr = fopen(file.c_str(), \"r\");char ch;str res;do{ch = fgetc(ptr);res += ch;} while (ch != -1);    fclose(ptr);return res;}void writeFile(str file, str text){FILE* ptr = fopen(file.c_str(), \"w\");fprintf(ptr,\"%s\", text.c_str());fclose(ptr);}void appendFile(str file, str text){FILE* ptr = fopen(file.c_str(), \"a\");fprintf(ptr,\"%s\", text.c_str());fclose(ptr);}bool fileExists(str file){return fopen(file.c_str(),\"r\") != 0;}void deleteFile(str file){remove(file.c_str());}";
+            os << "\ntemplate <typename T>T read();template <>int read(){int o;std::cin >> o;return o;}template <>char read(){char o;std::cin >> o;return o;}template <>float read(){float o;std::cin >> o;return o;}template <>str read(){str o;std::cin >> o;return o;}\n";
+            os << "int main(){std::cout<<std::boolalpha;";
             for (const auto statement : block_)
                 os << *statement << '\n';
 

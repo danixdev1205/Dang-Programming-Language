@@ -1609,6 +1609,7 @@
     <ClCompile Include="ast\values\integer_value.ixx" />
     <ClCompile Include="ast\values\string_value.ixx" />
     <ClCompile Include="ast\values\symbol_value.ixx" />
+    <ClCompile Include="cleanup.cpp" />
     <ClCompile Include="enums\assignment_operator.ixx">
       <AssemblerOutput>NoListing</AssemblerOutput>
       <AssemblerListingLocation>x64\Release\</AssemblerListingLocation>

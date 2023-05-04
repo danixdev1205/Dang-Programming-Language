@@ -3,10 +3,6 @@ import dang;
 import dang.parser;
 import std;
 
-/*
- * 
- */
-
 using namespace ansi;
 using namespace dang;
 using namespace std;
@@ -32,12 +28,11 @@ int main(const size_t argc, const char* const argv[])
 {
     if (argc == 1)
         return 0;
-    
-    const auto cxx = std::format("{}.cxx", argv[1]);    
-    (std::wofstream(cxx)
-            << *parser(lexer(read_file(argv[1])).tokenize()).parse()
-        ).close();
 
-    // cout << std::format("\"./bin/g++\" -std=c++17 \"{0}\" -o DangProgram", cxx).c_str();
-    system(std::format("\"\"./bin/g++\" -o DangProgram \"{0}\" -std=c++0x\"", cxx).c_str());
+    const auto cxx = std::format("{}.cpp", argv[1]);
+    (std::wofstream(cxx)
+        << *parser(lexer(read_file(argv[1])).tokenize()).parse()
+    ).close();
+
+    system(std::format("\"\"./bin/g++\" -static -o DangProgram \"{0}\"\"", cxx).c_str());
 }

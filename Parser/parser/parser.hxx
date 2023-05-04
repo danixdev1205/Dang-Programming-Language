@@ -128,20 +128,25 @@ export namespace dang
                 return new ast::func_statement(body(), name->value(), params, type);
             }
 
-            if (match(identifier) && match(container_paren_left))
+            if (match(identifier))
             {
-                std::vector<const ast::expression*> params;
-
-                while (!look(container_paren_right))
+                if (match(container_paren_left))
                 {
-                    params.emplace_back(expression());
+                    std::vector<const ast::expression*> params;
 
-                    if (!match(comma))
-                        break;
+                    while (!look(container_paren_right))
+                    {
+                        params.emplace_back(expression());
+
+                        if (!match(comma))
+                            break;
+                    }
+
+                    skip(container_paren_right);
+                    return new ast::function_statement(cur->value(), params);
                 }
 
-                skip(container_paren_right);
-                return new ast::function_statement(cur->value(), params);
+                index_--;
             }
 
             return assignment_statement();
